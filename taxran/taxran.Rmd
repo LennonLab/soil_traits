@@ -1,0 +1,60 @@
+### A. Retrieve and Set Your Working Directory
+
+```{r, results = 'hide'}
+rm(list = ls())
+getwd()
+setwd("~/GitHub/soil_traits/taxran")
+```
+
+### B. Load Pakcages, Data, Source File
+
+```{r}
+# Load Trait and Taxonomy Data
+data <- read.csv("data/nestedfinal.csv")
+
+# Load Source File
+source("taxran15.R")
+
+# Load `lme4`
+require("lme4")
+```
+
+### C. Run `taxran` for Optimum
+
+```{r}
+# Note: This May Take Hours
+ans <- taxran15(data,"Optimum")
+```
+
+### D. Interpreting `taxran` Output
+The `taxran` function returns a list containing two items. 
+The first is the proportion of variation explained for each taxonomic level.
+
+```{r}
+ans[[1]]
+```
+
+The second item in the `taxran` output list is the proportion of variation explained at each taxonomic level for the randomized data. 
+
+```{r}
+ans[[2]]
+```
+
+Last, let's test whether or not the observed variance explained for a given taxonomic level is different than what we would expect from randomized data:
+
+```{r}
+# Identify Taxonomic Level
+tax.level <- "Family"
+
+# Observed Variance Explained
+obs.var <- ans[[1]][tax.level]
+
+# Lower and Upper 95% Confidence Interval
+rand.var <- sort(ans[[2]][tax.level,])[c(25,975)]
+
+# Does Observed Value Fall Within 95% Confidence Intervals?
+CI.test <- obs.var > rand.var[1] && obs.var < rand.var[2] 
+
+# Calculate a 1-Sided P-value
+p.val <- max(which(sort(ans[[2]][tax.level,]) > obs.var), 0) / 1000
+``` 
