@@ -1,3 +1,5 @@
+soil_traits
+=======
 # soil_traits
 This GitHub Repository contains code included in Lennon JT, Aanderud ZA, Lehmkuhl BK, Schoolmaster DR (2012) Mapping the niche space of soil microorganisms using taxonomy and traits. Ecology 93: 1867-1879.
 
