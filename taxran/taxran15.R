@@ -1,17 +1,17 @@
-### This `taxran` function takes a dataframe with a column for each taxonomic level.
-### Levels range from Domain to Species. 
-### In addition, the names of each trait are also columns name in the dataframe. 
-### The function returns the proportion of total variation explained in the trait at each taxonomic level. 
+### This `taxran` function takes a dataframe where taxonomic level are supplied in columns.
+### Taxonomic levels range from Domain to Species. 
+### In addition, the dataframe contains continuous traits for supplied in columns.
+### The function returns the proportion of total variation explained for a trait at each taxonomic level. 
 ### The function also returns `n` simulations. 
-### Simulations test the hypothesis of no taxonomic structure.
-### Accomplished by randomly assigning trait values to taxa and refitting the model.
+### Simulations are used to test the hypothesis of no taxonomic structure.
+### This is ccomplished by randomly assigning trait values to taxa and refitting the model.
 
 taxran15 <- function(data,trait){
 
 require(lme4)  
   
-  #set up number of times to simulated the null hypothesis
-  n = 999 
+  #set up number of times to simulate the null hypothesis
+  n = 999
   output<-matrix(0, 7, n)
   rownames(output) <- c(colnames(data)[1:6], "Residual(Species)")
   
@@ -21,7 +21,7 @@ require(lme4)
   # Collect variance explained at each level
   vars <- as.numeric(VarCorr(B))
 
-  # Fet residual variance
+  # Fit residual variance
   residvar <- var(resid(B))
   
   #combine variances and divide by total to get variance explained at each level
