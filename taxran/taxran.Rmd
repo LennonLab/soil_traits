@@ -28,19 +28,19 @@ ans <- taxran15(data,"Optimum")
 
 ### D. Interpreting `taxran` Output
 The `taxran` function returns a list containing two items. 
-The first is the proportion of variation explained for each taxonomic level.
+The first is the proportion of variation explained for each taxonomic level (ans$act.pct).
 
 ```{r}
 ans[[1]]
 ```
 
-The second item in the `taxran` output list is the proportion of variation explained at each taxonomic level for the randomized data. 
+The second item in the `taxran` output list is the proportion of variation explained at each taxonomic level for the randomized data (ans$sim.pct). 
 
 ```{r}
 ans[[2]]
 ```
 
-Last, let's test whether or not the observed variance explained for a given taxonomic level is different than what we would expect from randomized data:
+Last, let's test whether or not the observed variance explained for a given taxonomic level is different from what we would expect from the randomized data:
 
 ```{r}
 # Identify Taxonomic Level
