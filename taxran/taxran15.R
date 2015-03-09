@@ -11,15 +11,15 @@ taxran15 <- function(data,trait){
 require(lme4)  
   
   #set up number of times to simulate the null hypothesis
-  n = 999
-  output<-matrix(0, 7, n)
+  n = 10
+  output <- matrix(0, 7, n)
   rownames(output) <- c(colnames(data)[1:6], "Residual(Species)")
   
   # Use lmer with stucture nested by taxonomic heirarchy
   B <- lmer(data[,trait] ~ (1|Domain/Division/Class/Order/Family/Genus), data = data)
 
   # Collect variance explained at each level
-  vars <- as.numeric(VarCorr(B))
+  vars <- as.numeric(lme4::VarCorr(B))
 
   # Fit residual variance
   residvar <- var(resid(B))
