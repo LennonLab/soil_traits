@@ -6,7 +6,7 @@ getwd()
 setwd("~/GitHub/soil_traits/taxran")
 ```
 
-### B. Load Pakcages, Data, Source File
+### B. Load Data, Source File, and Package
 
 ```{r}
 # Load Trait and Taxonomy Data
@@ -19,14 +19,14 @@ source("taxran15.R")
 require("lme4")
 ```
 
-### C. Run `taxran` for Optimum
+### C. Run `taxran` for a single trait
 
 ```{r}
-# Note: This May Take Hours, but you can change `n` in taxran15.R and reload source
+# Note: This Can Take a Long Time, But You Can Change `n` in taxran15.R and Reload Source
 ans <- taxran15(data,"Optimum")
 ```
 
-### D. Interpreting `taxran` Output
+### D. Interpreting `taxran` output
 The `taxran` function returns a list containing two items. 
 The first is the proportion of variation explained for each taxonomic level (ans$act.pct).
 
@@ -40,7 +40,7 @@ The second item in the `taxran` output list is the proportion of variation expla
 ans[[2]]
 ```
 
-Last, let's test whether or not the observed variance explained for a given taxonomic level is different from what we would expect from the randomized data:
+Last, test whether or not the observed variance explained for a given taxonomic level is different from what we would expect from the randomized data:
 
 ```{r}
 # Identify Taxonomic Level
@@ -49,7 +49,7 @@ tax.level <- "Family"
 # Observed Variance Explained
 obs.var <- ans[[1]][tax.level]
 
-# Lower and Upper 95% Confidence Interval
+# Lower and Upper 95% Confidence Intervals
 rand.var <- sort(ans[[2]][tax.level,])[c(25,975)]
 
 # Does Observed Value Fall Within 95% Confidence Intervals?
