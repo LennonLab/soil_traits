@@ -22,7 +22,7 @@ require("lme4")
 ### C. Run `taxran` for Optimum
 
 ```{r}
-# Note: This May Take Hours
+# Note: This May Take Hours, but you can change `n` in taxran15.R and reload source
 ans <- taxran15(data,"Optimum")
 ```
 
