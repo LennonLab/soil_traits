@@ -16,14 +16,15 @@ data <- read.csv("data/nestedfinal.csv")
 source("taxran15.R")
 
 # Load `lme4`
-require("lme4")
+# require("lme4")
+require("nlme")
 ```
 
 ### C. Run `taxran` for a single trait
 
 ```{r}
 # Note: This Can Take a Long Time, But You Can Change `n` in taxran15.R and Reload Source
-ans <- taxran15(data,"Optimum")
+ans <- taxran15(input = data, trait = data[,"Optimum"])
 ```
 
 ### D. Interpreting `taxran` output
