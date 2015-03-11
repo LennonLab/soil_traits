@@ -3,8 +3,8 @@
 ### The function returns the proportion of total variation explained for a trait at each taxonomic level. 
 ### The function also returns null expectation of explained variation for `n` randomizations of data. 
 
-taxran15 <- function(input = "",trait = ""){
-
+#taxran15 <- function(input = "", trait = ""){
+taxran15 <- function(input, trait){
   # Load packages
   options(warn = -1)
   require(nlme)
@@ -25,10 +25,7 @@ taxran15 <- function(input = "",trait = ""){
   # Identify trait of interest
   
   # trait <- "Optimum"
-  # trait2 <- input[,trait]
- 
-  trait.sim <- rep(NA, length(trait))
-  
+  #trait <- input[,trait]
   # dat1 <- data.frame(data, resp, sim.resp = rep(0, nrow(data)))
   # resp is a function of intercept; which is a random variable, which we are attempting to explain via tax
   #B <- lme(resp ~ 1, random = ~1|Domain/Division/Class/Order/Family/Genus,data = dat1)
@@ -42,6 +39,8 @@ taxran15 <- function(input = "",trait = ""){
   pctvar <- round(vars/sum(vars),3)
   
   # Beginning of permutation test
+  trait.sim <- rep(NA, length(trait))
+  
   for(i in 1:n){
   
     trait.sim <- sample(trait)
@@ -49,7 +48,6 @@ taxran15 <- function(input = "",trait = ""){
     sim.vc <- VarCorr(sim.B)[,1]
     sim.vars <- as.numeric(sim.vc)[!is.na(as.numeric(sim.vc))]
     names(sim.vars) <- c("Type","Division","Class","Order","Family","Genus","Residual(Species)")
-  
     sim.pctvar <- round(sim.vars/sum(sim.vars),3)
     output[,i] <- sim.pctvar    
   }
