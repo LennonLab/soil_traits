@@ -1,22 +1,26 @@
 ### A. Retrieve and Set Your Working Directory
 
 ```{r, results = 'hide'}
+# Clear objects in your environment
 rm(list = ls())
+
+# Get your working directory 
 getwd()
+
+# Set your working directory
 setwd("~/GitHub/soil_traits/taxran")
 ```
 
 ### B. Load Data, Source File, and Package
 
 ```{r}
-# Load Trait and Taxonomy Data
+# Load trait and taxonomy dataframe
 data <- read.csv("data/nestedfinal.csv")
 
-# Load Source File
+# Load source file
 source("taxran15.R")
 
-# Load `lme4`
-# require("lme4")
+# Load `nlme` package
 require("nlme")
 ```
 
@@ -27,38 +31,37 @@ require("nlme")
 input <- data
 trait <- "Optimum"
 
-# Note: This Can Take a Long Time, But You Can Change `n` in taxran15.R and Reload Source
-#ans <- taxran15(input = data, trait = data[,"Optimum"])
+# Note: this can take a long time, but you can change `n` in taxran15.R and reload source
 ans <- taxran15(input, trait)
 ```
 
 ### D. Interpreting `taxran` output
 The `taxran` function returns a list containing two items. 
-The first is the proportion of variation explained for each taxonomic level (ans$act.pct).
+The first is the proportion of variation explained for each taxonomic level (`ans$act.pct`).
 
 ```{r}
 ans[[1]]
 ```
 
-The second item in the `taxran` output list is the proportion of variation explained at each taxonomic level for the randomized data (ans$sim.pct). 
+The second item in the `taxran` output list is the proportion of variation explained at each taxonomic level for the randomized data (`ans$sim.pct`). 
 
 ```{r}
 ans[[2]]
 ```
 
-Last, test whether or not the observed variance explained for a given taxonomic level is different from what we would expect from the randomized data:
+Last, we can test whether or not the observed variance explained for a given taxonomic level is different from what we would expect based on the null expectaion from randomized data:
 
 ```{r}
-# Identify Taxonomic Level
+# Identify taxonomic Level
 tax.level <- "Family"
 
-# Observed Variance Explained
+# Observed variance explained
 obs.var <- ans[[1]][tax.level]
 
-# Lower and Upper 95% Confidence Intervals
+# Lower and upper 95% confidence entervals
 rand.var <- sort(ans[[2]][tax.level,])[c(25,975)]
 
-# Does Observed Value Fall Within 95% Confidence Intervals?
+# Does observed value fall within 95% confidence intervals?
 CI.test <- obs.var > rand.var[1] && obs.var < rand.var[2] 
 
 # Calculate a 1-Sided P-value
