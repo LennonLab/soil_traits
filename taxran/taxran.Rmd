@@ -59,7 +59,10 @@ tax.level <- "Family"
 obs.var <- ans[[1]][tax.level]
 
 # Lower and upper 95% confidence entervals
+# Note: code below based on 1000 resamplings
+# Note: distribution of variance may not be normally distributed
 rand.var <- sort(ans[[2]][tax.level,])[c(25,975)]
+error <- qnorm(0.975)*s/sqrt(n)
 
 # Does observed value fall within 95% confidence intervals?
 CI.test <- obs.var > rand.var[1] && obs.var < rand.var[2] 

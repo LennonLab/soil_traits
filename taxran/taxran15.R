@@ -9,7 +9,7 @@ taxran15 <- function(input, trait){
   options(warn = -1)
   
   # Number of randomizations; default = 1000
-  n = 10 
+  n = 50 
 
   # Create 7 x n output matrix of zeros (7 = levels of taxonomic hierarchy)
   output <- matrix(NA, 7, n)
@@ -48,7 +48,7 @@ taxran15 <- function(input, trait){
     # Calculate variance from randomized data
     sim.vc <- VarCorr(sim.B)[,1]
     sim.vars <- as.numeric(sim.vc)[!is.na(as.numeric(sim.vc))]
-    names(sim.vars) <- c("Type","Division","Class","Order","Family","Genus","Residual(Species)")
+    names(sim.vars) <- c("Domain","Division","Class","Order","Family","Genus","Residual(Species)")
     sim.pctvar <- round(sim.vars/sum(sim.vars),3)
     output[,i] <- sim.pctvar
   }
